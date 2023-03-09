@@ -17,7 +17,7 @@ public class HouseController {
         this.houseService = houseService;
     }
 
-    @GetMapping("{/id}")
+    @GetMapping("/{id}")
     public Faculty getFaculty(@PathVariable Long id){
         return houseService.readFaculty(id);
     }
@@ -32,12 +32,12 @@ public class HouseController {
         return houseService.updateFaculty(faculty);
     }
 
-    @DeleteMapping("{/id}")
+    @DeleteMapping("/{id}")
     public Faculty deleteFaculty(@PathVariable Long id){
         return houseService.deleteFaculty(id);
     }
 
-    @GetMapping("{/color}")
+    @GetMapping
     public List<Faculty> getAge(@RequestParam String color){
         return houseService.getColor(color);
     }
