@@ -1,45 +1,46 @@
 package ru.hogwarts.school.service;
 
+import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 import ru.hogwarts.school.model.Faculty;
-import ru.hogwarts.school.model.Student;
+import ru.hogwarts.school.repository.FacultyRepository;
 
-import java.util.HashMap;
 import java.util.List;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Service
 public class HouseService {
-    private final HashMap<Long, Faculty> houses = new HashMap<>();
-    private Long id = 0L;
+
+    private final FacultyRepository facultyRepository;
+
+    public HouseService(FacultyRepository facultyRepository) {
+        this.facultyRepository = facultyRepository;
+    }
 
 
     public Faculty creatFaculty(Faculty faculty){
-        faculty.setId(id);
-        houses.put(id,faculty);
-        return faculty;
+        return facultyRepository.save(faculty);
     }
 
 
     public Faculty readFaculty(Long id){
-        return houses.get(id);
+        return facultyRepository.getById(id);
     }
 
 
     public Faculty updateFaculty(Faculty faculty){
-        houses.put(faculty.getId(), faculty);
-        return faculty;
+        return facultyRepository.save(faculty);
     }
 
 
-    public Faculty deleteFaculty(Long id){
-        return houses.remove(id);
+    public void deleteFaculty(Long id){
+        facultyRepository.deleteById(id);
     }
 
-    public List<Faculty> getColor(String colol){
-        Stream<Faculty> stream = houses.values().stream();
-        stream = stream.filter(houses -> colol.equals(houses.getColor()));
-        return stream.collect(Collectors.toList());
+    public List<Faculty> getColor(String color){
+        return facultyRepository.findFacultiesByColor(color);
     }
+
 }
