@@ -24,7 +24,7 @@ public class StudentService {
     }
 
     public Student readStudent(Long id){
-        return studentRepository.getById(id);
+        return studentRepository.findById(id).get();
     }
 
     public Student updateStudent(Student student){
@@ -37,6 +37,10 @@ public class StudentService {
 
     public List<Student> getAge(int age){
         return studentRepository.findStudentByAge(age);
+    }
+
+    public List<Student> getMinMaxAge(int min, int max){
+        return studentRepository.findByAgeBetween(min, max);
     }
 
 }

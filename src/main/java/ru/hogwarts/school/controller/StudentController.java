@@ -3,6 +3,7 @@ package ru.hogwarts.school.controller;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
+import ru.hogwarts.school.dto.StudentDTO;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.service.StudentService;
 
@@ -25,13 +26,13 @@ public class StudentController {
     }
 
     @PostMapping
-    public Student creatStudent(@RequestBody Student student){
-        return studentService.creatStudent(student);
+    public Student creatStudent(@RequestBody StudentDTO studentDTO){
+        return studentService.creatStudent(studentDTO.toStudent());
     }
 
     @PutMapping
-    public Student updateStudent(@RequestBody Student student){
-        return studentService.updateStudent(student);
+    public Student updateStudent(@RequestBody StudentDTO studentDTO){
+        return studentService.updateStudent(studentDTO.toStudent());
     }
 
     @DeleteMapping("/{id}")
@@ -41,7 +42,15 @@ public class StudentController {
     }
 
     @GetMapping
-    public List<Student> getAge(@RequestParam int age){
-        return studentService.getAge(age);
+    public List<Student> getAge(@RequestParam (required = false) int age,
+                                @RequestParam (required = false) int min,
+                                @RequestParam (required = false) int max){
+        if (age != 0) {
+            return studentService.getAge(age);
+        }
+        if (min != 0 && max != 0){
+            return studentService.getMinMaxAge(min, max);
+        }
+        return null;
     }
 }

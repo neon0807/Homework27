@@ -3,6 +3,7 @@ package ru.hogwarts.school.controller;
 import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.hogwarts.school.dto.FacultyDTO;
 import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.service.HouseService;
@@ -25,13 +26,13 @@ public class HouseController {
     }
 
     @PostMapping
-    public Faculty creatFaculty(@RequestBody Faculty faculty){
-        return houseService.creatFaculty(faculty);
+    public Faculty creatFaculty(@RequestBody FacultyDTO facultyDTO){
+        return houseService.creatFaculty(facultyDTO.toFaculty());
     }
 
     @PutMapping
-    public Faculty updateFaculty(@RequestBody Faculty faculty){
-        return houseService.updateFaculty(faculty);
+    public Faculty updateFaculty(@RequestBody FacultyDTO facultyDTO){
+        return houseService.updateFaculty(facultyDTO.toFaculty());
     }
 
     @DeleteMapping("/{id}")
@@ -41,8 +42,14 @@ public class HouseController {
     }
 
     @GetMapping
-    public List<Faculty> getColor(@RequestParam String color){
-        return houseService.getColor(color);
+    public Faculty getColor(@RequestParam (required = false) String color,
+                            @RequestParam (required = false) String name) {
+        if (name != null && !name.isBlank()) {
+           return houseService.getName(name);
+        }
+        if ((color != null && color.isBlank())) {
+            return houseService.getColor(color);
+        }
+        return null;
     }
-
 }

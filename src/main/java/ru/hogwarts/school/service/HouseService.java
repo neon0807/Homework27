@@ -2,6 +2,7 @@ package ru.hogwarts.school.service;
 
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
+import ru.hogwarts.school.dto.FacultyDTO;
 import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.repository.FacultyRepository;
 
@@ -26,7 +27,7 @@ public class HouseService {
 
 
     public Faculty readFaculty(Long id){
-        return facultyRepository.getById(id);
+        return facultyRepository.findById(id).get();
     }
 
 
@@ -39,8 +40,12 @@ public class HouseService {
         facultyRepository.deleteById(id);
     }
 
-    public List<Faculty> getColor(String color){
+    public Faculty getColor(String color){
         return facultyRepository.findFacultiesByColor(color);
+    }
+
+    public Faculty getName(String name){
+        return facultyRepository.findFacultiesByNameIgnoreCase(name);
     }
 
 }
