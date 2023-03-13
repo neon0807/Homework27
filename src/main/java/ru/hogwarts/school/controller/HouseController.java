@@ -1,6 +1,9 @@
 package ru.hogwarts.school.controller;
 
+import org.apache.coyote.Response;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.hogwarts.school.dto.FacultyDTO;
 import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.service.HouseService;
@@ -17,29 +20,36 @@ public class HouseController {
         this.houseService = houseService;
     }
 
-    @GetMapping("{id}")
+    @GetMapping("/{id}")
     public Faculty getFaculty(@PathVariable Long id){
         return houseService.readFaculty(id);
     }
 
     @PostMapping
-    public Faculty creatFaculty(@RequestBody Faculty faculty){
-        return houseService.creatFaculty(faculty);
+    public Faculty creatFaculty(@RequestBody FacultyDTO facultyDTO){
+        return houseService.creatFaculty(facultyDTO.toFaculty());
     }
 
     @PutMapping
-    public Faculty updateFaculty(@RequestBody Faculty faculty){
-        return houseService.updateFaculty(faculty);
+    public Faculty updateFaculty(@RequestBody FacultyDTO facultyDTO){
+        return houseService.updateFaculty(facultyDTO.toFaculty());
     }
 
-    @DeleteMapping("{id}")
-    public Faculty deleteFaculty(@PathVariable Long id){
-        return houseService.deleteFaculty(id);
+    @DeleteMapping("/{id}")
+    public ResponseEntity deleteFaculty(@PathVariable Long id){
+        houseService.deleteFaculty(id);
+        return ResponseEntity.ok().build();
     }
 
-    @GetMapping("{color}")
-    public List<Faculty> getAge(@RequestParam String color){
-        return houseService.getColor(color);
+    @GetMapping
+    public Faculty getColor(@RequestParam (required = false) String color,
+                            @RequestParam (required = false) String name) {
+        if (name != null && !name.isBlank()) {
+           return houseService.getName(name);
+        }
+        if ((color != null && color.isBlank())) {
+            return houseService.getColor(color);
+        }
+        return null;
     }
-
 }
