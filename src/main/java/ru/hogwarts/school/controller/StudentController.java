@@ -23,17 +23,17 @@ public class StudentController {
 
     @GetMapping("/{id}")
     public Student readStudent(@PathVariable Long id){
-        return studentService.readStudent(id);
+        return studentService.readStudent(id).toStudent();
     }
 
     @PostMapping
     public Student creatStudent(@RequestBody StudentDTO studentDTO){
-        return studentService.creatStudent(studentDTO.toStudent());
+        return studentService.creatStudent(studentDTO.toStudent()).toStudent();
     }
 
     @PutMapping
     public Student updateStudent(@RequestBody StudentDTO studentDTO){
-        return studentService.updateStudent(studentDTO.toStudent());
+        return studentService.updateStudent(studentDTO.toStudent()).toStudent();
     }
 
     @DeleteMapping("/{id}")
@@ -43,7 +43,7 @@ public class StudentController {
     }
 
     @GetMapping
-    public List<Student> getAge(@RequestParam (required = false) int age,
+    public List<StudentDTO> getAge(@RequestParam (required = false) int age,
                                 @RequestParam (required = false) int min,
                                 @RequestParam (required = false) int max){
         if (age != 0) {

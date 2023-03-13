@@ -22,17 +22,17 @@ public class HouseController {
 
     @GetMapping("/{id}")
     public Faculty getFaculty(@PathVariable Long id){
-        return houseService.readFaculty(id);
+        return houseService.readFaculty(id).toFaculty();
     }
 
     @PostMapping
     public Faculty creatFaculty(@RequestBody FacultyDTO facultyDTO){
-        return houseService.creatFaculty(facultyDTO.toFaculty());
+        return houseService.creatFaculty(facultyDTO.toFaculty()).toFaculty();
     }
 
     @PutMapping
     public Faculty updateFaculty(@RequestBody FacultyDTO facultyDTO){
-        return houseService.updateFaculty(facultyDTO.toFaculty());
+        return houseService.updateFaculty(facultyDTO.toFaculty()).toFaculty();
     }
 
     @DeleteMapping("/{id}")
@@ -45,10 +45,10 @@ public class HouseController {
     public Faculty getColor(@RequestParam (required = false) String color,
                             @RequestParam (required = false) String name) {
         if (name != null && !name.isBlank()) {
-           return houseService.getName(name);
+           return houseService.getName(name).toFaculty();
         }
         if ((color != null && color.isBlank())) {
-            return houseService.getColor(color);
+            return houseService.getColor(color).toFaculty();
         }
         return null;
     }

@@ -31,7 +31,7 @@ public class AvatarService {
     }
 
     public void uploadAvatar(Long studentId, MultipartFile file) throws IOException {
-        Student student = studentService.readStudent(studentId);
+        Student student = studentService.readStudent(studentId).toStudent();
 
         Path filePath = Path.of(avatarDir, studentId + ".jpg");
         Files.createDirectories(filePath.getParent());

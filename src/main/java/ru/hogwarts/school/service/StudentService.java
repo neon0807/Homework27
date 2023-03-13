@@ -3,6 +3,7 @@ package ru.hogwarts.school.service;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.stereotype.Service;
 
+import ru.hogwarts.school.dto.StudentDTO;
 import ru.hogwarts.school.model.Student;
 
 import ru.hogwarts.school.repository.StudentRepository;
@@ -19,27 +20,27 @@ public class StudentService {
         this.studentRepository = studentRepository;
     }
 
-    public Student creatStudent(Student student){
-        return studentRepository.save(student);
+    public StudentDTO creatStudent(Student student){
+        return StudentDTO.fromStudent(studentRepository.save(student));
     }
 
-    public Student readStudent(Long id){
-        return studentRepository.findById(id).get();
+    public StudentDTO readStudent(Long id){
+        return StudentDTO.fromStudent(studentRepository.findById(id).get());
     }
 
-    public Student updateStudent(Student student){
-        return studentRepository.save(student);
+    public StudentDTO updateStudent(Student student){
+        return StudentDTO.fromStudent(studentRepository.save(student));
     }
 
     public void deleteStudent(Long id){
         studentRepository.deleteById(id);
     }
 
-    public List<Student> getAge(int age){
+    public List<StudentDTO> getAge(int age){
         return studentRepository.findStudentByAge(age);
     }
 
-    public List<Student> getMinMaxAge(int min, int max){
+    public List<StudentDTO> getMinMaxAge(int min, int max){
         return studentRepository.findByAgeBetween(min, max);
     }
 

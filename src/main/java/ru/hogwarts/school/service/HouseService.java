@@ -14,25 +14,25 @@ import java.util.stream.Stream;
 @Service
 public class HouseService {
 
-    private final FacultyRepository facultyRepository;
+    private  FacultyRepository facultyRepository;
 
     public HouseService(FacultyRepository facultyRepository) {
         this.facultyRepository = facultyRepository;
     }
 
 
-    public Faculty creatFaculty(Faculty faculty){
-        return facultyRepository.save(faculty);
+    public FacultyDTO creatFaculty(Faculty faculty){
+        return FacultyDTO.fromFaculty(facultyRepository.save(faculty));
     }
 
 
-    public Faculty readFaculty(Long id){
-        return facultyRepository.findById(id).get();
+    public FacultyDTO readFaculty(Long id){
+        return FacultyDTO.fromFaculty(facultyRepository.findById(id).get());
     }
 
 
-    public Faculty updateFaculty(Faculty faculty){
-        return facultyRepository.save(faculty);
+    public FacultyDTO updateFaculty(Faculty faculty){
+        return FacultyDTO.fromFaculty(facultyRepository.save(faculty));
     }
 
 
@@ -40,12 +40,12 @@ public class HouseService {
         facultyRepository.deleteById(id);
     }
 
-    public Faculty getColor(String color){
-        return facultyRepository.findFacultiesByColor(color);
+    public FacultyDTO getColor(String color){
+        return FacultyDTO.fromFaculty(facultyRepository.findFacultiesByColor(color));
     }
 
-    public Faculty getName(String name){
-        return facultyRepository.findFacultiesByNameIgnoreCase(name);
+    public FacultyDTO getName(String name){
+        return FacultyDTO.fromFaculty(facultyRepository.findFacultiesByNameIgnoreCase(name));
     }
 
 }
