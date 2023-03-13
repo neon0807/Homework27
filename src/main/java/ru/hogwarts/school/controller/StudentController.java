@@ -1,9 +1,11 @@
 package ru.hogwarts.school.controller;
 
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import ru.hogwarts.school.dto.StudentDTO;
+import ru.hogwarts.school.model.Avatar;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.service.StudentService;
 
@@ -14,7 +16,6 @@ import java.util.List;
 @RestController
 public class StudentController {
     private final StudentService studentService;
-
     public StudentController(StudentService studentService) {
         this.studentService = studentService;
     }
