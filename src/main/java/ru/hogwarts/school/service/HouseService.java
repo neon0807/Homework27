@@ -1,45 +1,51 @@
 package ru.hogwarts.school.service;
 
+import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
+import ru.hogwarts.school.dto.FacultyDTO;
 import ru.hogwarts.school.model.Faculty;
-import ru.hogwarts.school.model.Student;
+import ru.hogwarts.school.repository.FacultyRepository;
 
-import java.util.HashMap;
 import java.util.List;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Service
 public class HouseService {
-    private final HashMap<Long, Faculty> houses = new HashMap<>();
-    private Long id = 0L;
 
+    private  FacultyRepository facultyRepository;
 
-    public Faculty creatFaculty(Faculty faculty){
-        faculty.setId(id);
-        houses.put(id,faculty);
-        return faculty;
+    public HouseService(FacultyRepository facultyRepository) {
+        this.facultyRepository = facultyRepository;
     }
 
 
-    public Faculty readFaculty(Long id){
-        return houses.get(id);
+    public FacultyDTO creatFaculty(Faculty faculty){
+        return FacultyDTO.fromFaculty(facultyRepository.save(faculty));
     }
 
 
-    public Faculty updateFaculty(Faculty faculty){
-        houses.put(faculty.getId(), faculty);
-        return faculty;
+    public FacultyDTO readFaculty(Long id){
+        return FacultyDTO.fromFaculty(facultyRepository.findById(id).get());
     }
 
 
-    public Faculty deleteFaculty(Long id){
-        return houses.remove(id);
+    public FacultyDTO updateFaculty(Faculty faculty){
+        return FacultyDTO.fromFaculty(facultyRepository.save(faculty));
     }
 
-    public List<Faculty> getColor(String colol){
-        Stream<Faculty> stream = houses.values().stream();
-        stream = stream.filter(houses -> colol.equals(houses.getColor()));
-        return stream.collect(Collectors.toList());
+
+    public void deleteFaculty(Long id){
+        facultyRepository.deleteById(id);
     }
+
+    public FacultyDTO getColor(String color){
+        return FacultyDTO.fromFaculty(facultyRepository.findFacultiesByColor(color));
+    }
+
+    public FacultyDTO getName(String name){
+        return FacultyDTO.fromFaculty(facultyRepository.findFacultiesByNameIgnoreCase(name));
+    }
+
 }
