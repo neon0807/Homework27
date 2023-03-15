@@ -43,15 +43,32 @@ public class StudentController {
     }
 
     @GetMapping
-    public List<Student> getAge(@RequestParam (required = false) int age,
+    public List<Student> getAge(@RequestParam ("page") Integer pageNumber,
+                                @RequestParam ("size") Integer pageSize,
+                                @RequestParam (required = false) int age,
                                 @RequestParam (required = false) int min,
                                 @RequestParam (required = false) int max){
         if (age != 0) {
-            return studentService.getAge(age);
+            return studentService.getAge(pageNumber, pageSize, age);
         }
         if (min != 0 && max != 0){
-            return studentService.getMinMaxAge(min, max);
+            return studentService.getMinMaxAge(pageNumber, pageSize, min, max);
         }
         return null;
+    }
+
+    @GetMapping
+    public Long getTotalStudentsCount(){
+        return studentService.getTotalStudentsCount();
+    }
+
+    @GetMapping
+    public Long getAverageAge(){
+        return studentService.getAverageAge();
+    }
+
+    @GetMapping
+    public List<Student> getFiveYoungestStudent(){
+        return studentService.getFiveYoungestStudent();
     }
 }
