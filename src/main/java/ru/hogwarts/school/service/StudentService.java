@@ -36,11 +36,11 @@ public class StudentService {
         studentRepository.deleteById(id);
     }
 
-    public List<StudentDTO> getAge(int age){
+    public List<Student> getAge(int age){
         return studentRepository.findStudentByAge(age);
     }
 
-    public List<StudentDTO> getMinMaxAge(int min, int max){
+    public List<Student> getMinMaxAge(int min, int max){
         return studentRepository.findByAgeBetween(min, max);
     }
 

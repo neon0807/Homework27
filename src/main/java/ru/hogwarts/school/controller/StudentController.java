@@ -43,7 +43,7 @@ public class StudentController {
     }
 
     @GetMapping
-    public List<StudentDTO> getAge(@RequestParam (required = false) int age,
+    public List<Student> getAge(@RequestParam (required = false) int age,
                                 @RequestParam (required = false) int min,
                                 @RequestParam (required = false) int max){
         if (age != 0) {
