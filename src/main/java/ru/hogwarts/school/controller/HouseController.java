@@ -1,14 +1,9 @@
 package ru.hogwarts.school.controller;
 
-import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.hogwarts.school.dto.FacultyDTO;
-import ru.hogwarts.school.model.Faculty;
-import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.service.HouseService;
-
-import java.util.List;
 
 @RequestMapping("/faculty")
 @RestController
@@ -21,18 +16,18 @@ public class HouseController {
     }
 
     @GetMapping("/{id}")
-    public Faculty getFaculty(@PathVariable Long id){
-        return houseService.readFaculty(id).toFaculty();
+    public FacultyDTO getFaculty(@PathVariable Long id){
+        return houseService.readFaculty(id);
     }
 
     @PostMapping
-    public Faculty creatFaculty(@RequestBody FacultyDTO facultyDTO){
-        return houseService.creatFaculty(facultyDTO.toFaculty()).toFaculty();
+    public FacultyDTO creatFaculty(@RequestBody FacultyDTO facultyDTO){
+        return houseService.creatFaculty(facultyDTO.toFaculty());
     }
 
     @PutMapping
-    public Faculty updateFaculty(@RequestBody FacultyDTO facultyDTO){
-        return houseService.updateFaculty(facultyDTO.toFaculty()).toFaculty();
+    public FacultyDTO updateFaculty(@RequestBody FacultyDTO facultyDTO){
+        return houseService.updateFaculty(facultyDTO.toFaculty());
     }
 
     @DeleteMapping("/{id}")
@@ -42,13 +37,13 @@ public class HouseController {
     }
 
     @GetMapping
-    public Faculty getColor(@RequestParam (required = false) String color,
-                            @RequestParam (required = false) String name) {
+    public FacultyDTO getColor(@RequestParam (required = false) String color,
+                               @RequestParam (required = false) String name) {
         if (name != null && !name.isBlank()) {
-           return houseService.getName(name).toFaculty();
+           return houseService.getName(name);
         }
         if ((color != null && color.isBlank())) {
-            return houseService.getColor(color).toFaculty();
+            return houseService.getColor(color);
         }
         return null;
     }

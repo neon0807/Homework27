@@ -1,11 +1,8 @@
 package ru.hogwarts.school.controller;
 
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 import ru.hogwarts.school.dto.StudentDTO;
-import ru.hogwarts.school.model.Avatar;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.service.StudentService;
 
@@ -22,18 +19,18 @@ public class StudentController {
 
 
     @GetMapping("/{id}")
-    public Student readStudent(@PathVariable Long id){
-        return studentService.readStudent(id).toStudent();
+    public StudentDTO readStudent(@PathVariable Long id){
+        return studentService.readStudent(id);
     }
 
     @PostMapping
-    public Student creatStudent(@RequestBody StudentDTO studentDTO){
-        return studentService.creatStudent(studentDTO.toStudent()).toStudent();
+    public StudentDTO creatStudent(@RequestBody StudentDTO studentDTO){
+        return studentService.creatStudent(studentDTO.toStudent());
     }
 
     @PutMapping
-    public Student updateStudent(@RequestBody StudentDTO studentDTO){
-        return studentService.updateStudent(studentDTO.toStudent()).toStudent();
+    public StudentDTO updateStudent(@RequestBody StudentDTO studentDTO){
+        return studentService.updateStudent(studentDTO.toStudent());
     }
 
     @DeleteMapping("/{id}")
